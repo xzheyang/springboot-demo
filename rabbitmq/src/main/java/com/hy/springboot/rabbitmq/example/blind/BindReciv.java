@@ -33,6 +33,8 @@ public class BindReciv {
         //FIXME 这个是不是包含上面(不包含,必须先指定交换器 )
         //绑定队列指定队列的指定类型(这里是error类型,方法可以多次使用,绑定多个)
         channel.queueBind(queueName, EXCHANGE_NAME, LOG_LEVEL_ARR[2]);
+        channel.queueBind(queueName, EXCHANGE_NAME, LOG_LEVEL_ARR[1]);
+
 
         // 创建队列消费者
         final Consumer consumer = new DefaultConsumer(channel) {
@@ -45,8 +47,6 @@ public class BindReciv {
         };
         channel.basicConsume(queueName, true, consumer);
 
-        channel.close();
-        connection.close();
 
     }
 

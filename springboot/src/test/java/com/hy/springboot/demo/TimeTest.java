@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
  * @introduce
  **/
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class TimeTest {
 
 
-    @Test
+//    @Test
     public void test() {
 
         SpringBootScheduler scheduler= new SpringBootScheduler();

@@ -39,6 +39,7 @@ public enum CommonEnum {
     public static void main(String[] args) {
 
         System.out.println(CommonEnum.valueOf("MONDAY"));
+        System.out.println(CommonEnum.MONDAY.getDesc());
     }
 
 }
