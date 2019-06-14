@@ -10,6 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>springboot-demo-sample</artifactId>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <!-- 指定主类的影响 -->
+        <start-class>com.hy.springboot.sample.aop.AopApplication</start-class>
+    </properties>
+
     <build>
         <plugins>
             <plugin>

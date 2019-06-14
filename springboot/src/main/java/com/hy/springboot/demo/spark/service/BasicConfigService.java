@@ -18,6 +18,8 @@ public class BasicConfigService {
     private static final String HADOOP_CONF_DIR;
     private static final String YARN_CONF_DIR;
     private static final String MIGRATE_CLASSPATH;
+    private static final String SPECIAL_MIGRATE_CLASSPATH;
+    private static final String TABLE_MIGRATE_CLASSPATH;
 
     static {
 
@@ -32,6 +34,8 @@ public class BasicConfigService {
         HADOOP_CONF_DIR = bundle.getString("hadoop_conf_dir");
         YARN_CONF_DIR = bundle.getString("yarn_conf_dir");
         MIGRATE_CLASSPATH = bundle.getString("migrate_classpath");
+        SPECIAL_MIGRATE_CLASSPATH = bundle.getString("special_migrate_classpath");
+        TABLE_MIGRATE_CLASSPATH = bundle.getString("table_migrate_classpath");
 
     }
 
@@ -66,4 +70,13 @@ public class BasicConfigService {
     public static String getMigrateClasspath() {
         return MIGRATE_CLASSPATH;
     }
+
+    public static String getSpecialMigrateClasspath() {
+        return SPECIAL_MIGRATE_CLASSPATH;
+    }
+
+    public static String getTableMigrateClasspath() {
+        return TABLE_MIGRATE_CLASSPATH;
+    }
+
 }

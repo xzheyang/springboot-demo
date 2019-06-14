@@ -39,7 +39,7 @@ public class SparkWebController {
         String businessDate = request.getParameter("businessDate");
 
         SparkLauncherController sparkLauncherController = new SparkLauncherController();
-        Boolean result = sparkLauncherController.submit(BasicConfigService.getMigrateClasspath(),BasicConfigService.getRatingClasspath(),new String[]{isFirst,businessDate});
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getMigrateClasspath(),new String[]{isFirst,businessDate});
 
         return result.toString();
     }
@@ -47,12 +47,26 @@ public class SparkWebController {
     @RequestMapping(value = "/sparkJob/specialMigrate",method = RequestMethod.POST)
     public String specialMigrate(HttpServletRequest request) throws IOException, InterruptedException {
 
-        //fixme 表名全部是all,日期全部是2000年以前
-        String tableName = request.getParameter("tableName");
-        String businessDate = request.getParameter("businessDate");
+        String businessStartDate = request.getParameter("businessStartDate");
+        String businessEndDate = request.getParameter("businessEndDate");
 
         SparkLauncherController sparkLauncherController = new SparkLauncherController();
-        Boolean result = sparkLauncherController.submit(BasicConfigService.getMigrateClasspath(),BasicConfigService.getRatingClasspath(),new String[]{tableName,businessDate});
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getSpecialMigrateClasspath(),new String[]{businessStartDate,businessEndDate});
+
+        return result.toString();
+
+    }
+
+    @RequestMapping(value = "/sparkJob/specialTableMigrate",method = RequestMethod.POST)
+    public String specialTableMigrate(HttpServletRequest request) throws IOException, InterruptedException {
+
+        String rdbmsTableName = request.getParameter("rdbmsTableName");
+        String database = request.getParameter("database");
+        String hiveTableName = request.getParameter("hiveTableName");
+        String splitColName = request.getParameter("splitColName");
+
+        SparkLauncherController sparkLauncherController = new SparkLauncherController();
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getTableMigrateClasspath(),new String[]{rdbmsTableName,database,hiveTableName,splitColName});
 
         return result.toString();
     }
@@ -75,17 +89,13 @@ public class SparkWebController {
     @RequestMapping(value = "/sparkJob/ruleProcess",method = RequestMethod.POST)
     public String rule(HttpServletRequest request) throws IOException, InterruptedException {
 
-        String isFirst = request.getParameter("isFirst");
         String businessDate = request.getParameter("businessDate");
 
-
         SparkLauncherController sparkLauncherController = new SparkLauncherController();
-        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getRuleClasspath(),new String[]{isFirst,businessDate});
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getRuleClasspath(),new String[]{businessDate});
 
         return result.toString();
     }
-
-
 
 
 }
