@@ -26,7 +26,7 @@ import java.util.Map;
 public class HBaseWebController {
 
     @RequestMapping(value = "/HBase/itemScore/getItemScore",method = RequestMethod.POST)
-    public Map<String,Object> query(HttpServletRequest request) throws IOException, InterruptedException {
+    public Map<String,Object> query(HttpServletRequest request) {
 
         String table= request.getParameter("dataname");
         String groupId= request.getParameter("groupid");
@@ -34,7 +34,7 @@ public class HBaseWebController {
             return new HashMap<>();
         }
 
-        List<Map<String, Object>> list = ItemScoreHBaseApi.getDataListFrom(table, groupId);
+        Map<String,Map<String, Object>> list = ItemScoreHBaseApi.getDataListFrom(table, groupId);
         Map<String,Object> result = new HashMap<>();
         result.put("data",list);
 

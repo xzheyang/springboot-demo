@@ -3,7 +3,6 @@ package com.hy.springboot.sample.test;
 
 import com.hy.springboot.sample.async.IAsync;
 import com.hy.springboot.sample.async.entities.AsyncTask;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

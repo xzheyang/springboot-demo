@@ -47,6 +47,7 @@ public class NativeAnnoAspect {
 
         Object result = printLog(joinPoint, LogLevel.TRACE, "正常日志");
 
+
         //通过
         Object proceed = null;
         try {
@@ -62,6 +63,7 @@ public class NativeAnnoAspect {
     private Object printLog(JoinPoint joinPoint,LogLevel level, String describe) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        
         try {
             if (joinPoint instanceof ProceedingJoinPoint) {
                 return ((ProceedingJoinPoint) joinPoint).proceed(joinPoint.getArgs());

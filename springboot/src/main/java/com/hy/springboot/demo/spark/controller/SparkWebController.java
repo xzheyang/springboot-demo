@@ -75,12 +75,12 @@ public class SparkWebController {
     @RequestMapping(value = "/sparkJob/rating",method = RequestMethod.POST)
     public String rating(HttpServletRequest request) throws IOException, InterruptedException {
 
-        String ruleType=request.getParameter("ruleType");
+        String isFirst =request.getParameter("isFirst");
         String businessDate=request.getParameter("businessDate");
 
 
         SparkLauncherController sparkLauncherController = new SparkLauncherController();
-        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getRatingClasspath(),new String[]{ruleType,businessDate});
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getRatingClasspath(),new String[]{isFirst,businessDate});
 
         return result.toString();
     }

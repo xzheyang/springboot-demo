@@ -1,6 +1,5 @@
 package com.hy.springboot.thread.deferedresult_multithreading.dao;
 
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MockQueue {
 
-    private static final Logger logger = LoggerFactory.getLogger(MockQueue.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MockQueue.class);
 
     //下单消息
     private String placeOrder;
@@ -31,7 +30,7 @@ public class MockQueue {
     @Async
     public void setPlaceOrder(String placeOrder) throws InterruptedException {
 
-        logger.info("接到下单请求" + placeOrder);
+        LOGGER.info("接到下单请求" + placeOrder);
         //模拟处理
         try {
             Thread.sleep(1000);
@@ -41,14 +40,14 @@ public class MockQueue {
         }
         //给completeOrder赋值
         this.completeOrder = placeOrder;
-        logger.info("下单请求处理完毕" + placeOrder);
+        LOGGER.info("下单请求处理完毕" + placeOrder);
 
     }
 
 
     public void setPlaceOrder2(String placeOrder) throws InterruptedException {
         new Thread(() -> {
-            logger.info("接到下单请求" + placeOrder);
+            LOGGER.info("接到下单请求" + placeOrder);
             //模拟处理
             try {
                 Thread.sleep(1000);
@@ -58,7 +57,7 @@ public class MockQueue {
             }
             //给completeOrder赋值
             this.completeOrder = placeOrder;
-            logger.info("下单请求处理完毕" + placeOrder);
+            LOGGER.info("下单请求处理完毕" + placeOrder);
         }).start();
     }
 

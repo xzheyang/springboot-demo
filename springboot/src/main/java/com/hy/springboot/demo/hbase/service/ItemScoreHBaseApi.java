@@ -1,7 +1,7 @@
 package com.hy.springboot.demo.hbase.service;
 
+
 import com.hy.springboot.demo.hbase.bean.RatingItemScore;
-import com.hy.springboot.demo.hbase.dao.HBaseRowkeyGen;
 import com.hy.springboot.demo.hbase.dao.HBaseTemplate;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.client.Get;
@@ -27,7 +27,7 @@ public class ItemScoreHBaseApi implements Serializable {
 
     /*
        fixme  说明
-            1.key为groupid倒序
+            1.key暂时为groupid正序
 
        fixme  2.每个item数据排列为column_rulecode(现在只存itemscore,数据排列为itemscore_rulecode)
      */
@@ -38,14 +38,14 @@ public class ItemScoreHBaseApi implements Serializable {
     /**
      * HD通用查询
      * @param dataName  需要查询的HBase表
-     * @param params    必须需要的查询的参数 (必须要有groupid)
+     * @param groupId    必须需要的查询的参数 (现在为groupId)
      * @return          返回所有结果(如果查询出错返回空,无数据返回空数据的List)
      */
-    public static List<Map<String, Object>> getDataListFrom(String dataName, String params) {
+    public static Map<String,Map<String, Object>> getDataListFrom(String dataName, String groupId) {
         HBaseTemplate hBaseTemplate = HBaseTemplate.getInstance();
-        List<Map<String, Object>> itemScores = null;
+        Map<String,Map<String, Object>> itemScores = null;
 
-        String key = params;
+        String key = groupId;
 
         HTable hTable = null;
         try {
@@ -56,7 +56,7 @@ public class ItemScoreHBaseApi implements Serializable {
         }
 
         try {
-            Result result = hTable.get(new Get(Bytes.toBytes(key)));
+            Result result = hTable.get(new Get(key.getBytes()));
             itemScores = getItemScores(result);
 
         } catch (IOException e) {
@@ -96,12 +96,12 @@ public class ItemScoreHBaseApi implements Serializable {
             return 0;
 
         List<Put> putList = new ArrayList<>();
-        for (RatingItemScore map:dataList){
-            String groupId = map.getGroupId();
-            String ruleCode = map.getRuleCode();
-            String itemScore = map.getItemScore();
-            String ruleExCode = map.getRuleExCode();
-            Put put = new Put(Bytes.toBytes(groupId));
+        for (RatingItemScore ratingItemScore:dataList){
+            String groupId = ratingItemScore.getGroupId();
+            String ruleCode = ratingItemScore.getRuleCode();
+            String ruleExCode =ratingItemScore.getRuleExCode();
+            String itemScore = ratingItemScore.getItemScore();
+            Put put = new Put(groupId.getBytes());
             put.addColumn(Bytes.toBytes(FAMILY),
                     Bytes.toBytes(getQualifier("itemscore",ruleCode)),
                     Bytes.toBytes(itemScore));
@@ -127,8 +127,8 @@ public class ItemScoreHBaseApi implements Serializable {
 
 
     //fixme poc临时获得所有score分数
-    private static List<Map<String, Object>> getItemScores(Result result){
-        List<Map<String, Object>> resultList = new ArrayList<>();
+    private static Map<String,Map<String, Object>> getItemScores(Result result){
+        Map<String,Map<String, Object>> resultList = new HashMap<>();
         List<String> ruleCodes = getRuleCodes();
 
         for (String ruleCode:ruleCodes){
@@ -136,16 +136,13 @@ public class ItemScoreHBaseApi implements Serializable {
                     Bytes.toBytes(getQualifier("itemscore",ruleCode)));
             Cell cell2 = result.getColumnLatestCell(Bytes.toBytes(FAMILY),
                     Bytes.toBytes(getQualifier("ruleexcode",ruleCode)));
-            if (cell!=null){
+            if (cell!=null&&cell2!=null){
                 String value = Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
+                String value2 = Bytes.toString(cell2.getValueArray(), cell2.getValueOffset(), cell2.getValueLength());
                 Map<String,Object> itemMap = new HashMap<>();
                 itemMap.put("itemscore",value);
-                itemMap.put("rulecode",ruleCode);
-                if (cell2!=null){
-                    String ruleExCode = Bytes.toString(cell2.getValueArray(), cell2.getValueOffset(), cell2.getValueLength());
-                    itemMap.put("ruleexcode",ruleExCode);
-                }
-                resultList.add(itemMap);
+                itemMap.put("ruleexcode",value2);
+                resultList.put(ruleCode,itemMap);
             }
         }
         return resultList;
@@ -157,57 +154,55 @@ public class ItemScoreHBaseApi implements Serializable {
         List<String> result = new ArrayList<>();
 
         //rmdbs
-//        List<Map<String, Object>> ruleCodesMap = JDBCUtils.queryParams("select RULECODE from AML_RISKRATING_RULE", null);
+//        List<Map<String, Object>> ruleCodesMap = JDBCUtils.queryParams("select MIDCLASSNO from AML_RISKSUBTERM_MIDCLASS group by midclassno", null);
 //        for (Map<String, Object> map:ruleCodesMap){
-//            result.add(map.get("RULECODE").toString());
+//            result.add(map.get("MIDCLASSNO").toString());
 //        }
 
 
         //hardCode
-        result.add("000001");
-        result.add("000002");
-        result.add("000003");
-        result.add("000004");
-        result.add("000005");
-        result.add("000006");
-        result.add("001001");
-        result.add("001002");
-        result.add("001003");
-        result.add("001004");
-        result.add("001005");
-        result.add("001006");
-        result.add("001007");
-        result.add("001008");
-        result.add("001009");
-        result.add("001010");
-        result.add("001011");
-        result.add("001012");
-        result.add("001013");
-        result.add("001014");
-        result.add("001015");
-        result.add("001016");
-        result.add("001017");
-        result.add("001018");
-        result.add("001019");
+        result.add("a1");
+        result.add("a3");
+        result.add("b2");
+        result.add("13");
+        result.add("11");
+        result.add("12");
+        result.add("21");
+        result.add("a4");
+        result.add("a2");
+        result.add("16");
+        result.add("31");
+        result.add("b1");
+        result.add("32");
+        result.add("42");
+        result.add("43");
+        result.add("14");
+        result.add("15");
+        result.add("41");
+        result.add("b3");
+        result.add("b4");
+
 
         return result;
     }
 
 
 
+
     //fixme 校验测试
     public static void main(String[] args) {
 
-
-        List<Map<String, Object>> query = ItemScoreHBaseApi.getDataListFrom("aml_riskrating_itemscore", "12005194");
+        String groupId = "1700";
+        Map<String,Map<String, Object>> query = ItemScoreHBaseApi.getDataListFrom("aml_riskrating_itemscore", groupId);
         System.out.println(query.toString());
 
 
 //        List<Map<String,Object>> list = new ArrayList<>();
 //        Map<String,Object> insertMap = new HashMap<>();
-//        insertMap.put("groupid","7942000");
-//        insertMap.put("rulecode","001007");
-//        insertMap.put("itemscore","15.000000");
+//        insertMap.put("groupid","1700");
+//        insertMap.put("rulecode","11");
+//        insertMap.put("itemscore","9.0000");
+//        insertMap.put("ruleexcode","1");
 //        list.add(insertMap);
 //
 //
