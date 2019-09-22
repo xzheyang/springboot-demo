@@ -20,6 +20,8 @@ public class BasicConfigService {
     private static final String MIGRATE_CLASSPATH;
     private static final String SPECIAL_MIGRATE_CLASSPATH;
     private static final String TABLE_MIGRATE_CLASSPATH;
+    private static final String IDENTIFY_CLASSPATH;
+    private static final String BLACKLIST_CLASSPATH;
 
     static {
 
@@ -36,6 +38,8 @@ public class BasicConfigService {
         MIGRATE_CLASSPATH = bundle.getString("migrate_classpath");
         SPECIAL_MIGRATE_CLASSPATH = bundle.getString("special_migrate_classpath");
         TABLE_MIGRATE_CLASSPATH = bundle.getString("table_migrate_classpath");
+        IDENTIFY_CLASSPATH  = bundle.getString("identify_classpath");
+        BLACKLIST_CLASSPATH = bundle.getString("blacklist_classpath");
 
     }
 
@@ -79,4 +83,11 @@ public class BasicConfigService {
         return TABLE_MIGRATE_CLASSPATH;
     }
 
+    public static String getIdentifyClasspath() {
+        return IDENTIFY_CLASSPATH;
+    }
+
+    public static String getBlacklistClasspath() {
+        return BLACKLIST_CLASSPATH;
+    }
 }

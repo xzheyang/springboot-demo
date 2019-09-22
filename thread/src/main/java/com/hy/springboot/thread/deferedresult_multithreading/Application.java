@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @SpringBootApplication
 @EnableAsync
 @ComponentScan
-public class Applaction {
+public class Application {
 
 
     /**
@@ -24,7 +24,7 @@ public class Applaction {
      *
      */
     public static void main(String[] args) {
-        SpringApplication.run(Applaction.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 

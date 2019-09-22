@@ -32,6 +32,15 @@ public class SparkWebController {
     }
 
 
+    /**
+     *  同步大数据接口
+     *
+     * @param request       isFirst(是否是同步所有数据,注意调用后,大数据端所有数据清空)
+     *                      businessDate(导入日期)
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @RequestMapping(value = "/sparkJob/migrate",method = RequestMethod.POST)
     public String migrate(HttpServletRequest request) throws IOException, InterruptedException {
 
@@ -44,6 +53,14 @@ public class SparkWebController {
         return result.toString();
     }
 
+    /**
+     *  特殊同步大数据接口(之前导入失败后)
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @RequestMapping(value = "/sparkJob/specialMigrate",method = RequestMethod.POST)
     public String specialMigrate(HttpServletRequest request) throws IOException, InterruptedException {
 
@@ -56,6 +73,7 @@ public class SparkWebController {
         return result.toString();
 
     }
+
 
     @RequestMapping(value = "/sparkJob/specialTableMigrate",method = RequestMethod.POST)
     public String specialTableMigrate(HttpServletRequest request) throws IOException, InterruptedException {
@@ -72,6 +90,14 @@ public class SparkWebController {
     }
 
 
+    /**
+     *  风险评级的调用接口
+     *
+     * @param request      isFirst是否首次上线    businessDate(跑批日期)
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @RequestMapping(value = "/sparkJob/rating",method = RequestMethod.POST)
     public String rating(HttpServletRequest request) throws IOException, InterruptedException {
 
@@ -86,6 +112,14 @@ public class SparkWebController {
     }
 
 
+    /**
+     *  规则筛选调用接口
+     *
+     * @param request       businessDate(跑批日期)
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @RequestMapping(value = "/sparkJob/ruleProcess",method = RequestMethod.POST)
     public String rule(HttpServletRequest request) throws IOException, InterruptedException {
 
@@ -93,6 +127,47 @@ public class SparkWebController {
 
         SparkLauncherController sparkLauncherController = new SparkLauncherController();
         Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getRuleClasspath(),new String[]{businessDate});
+
+        return result.toString();
+    }
+
+
+    /**
+     *  负面清单调用接口
+     *
+     * @param request      isFirst是否首次上线    businessDate(跑批日期)
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @RequestMapping(value = "/sparkJob/identify",method = RequestMethod.POST)
+    public String identify(HttpServletRequest request) throws IOException, InterruptedException {
+
+        String isFirst =request.getParameter("isFirst");
+        String businessDate=request.getParameter("businessDate");
+
+        SparkLauncherController sparkLauncherController = new SparkLauncherController();
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getIdentifyClasspath(),new String[]{isFirst,businessDate});
+
+        return result.toString();
+    }
+
+
+    /**
+     *  黑名单对外调用接口
+     *
+     * @param request       businessDate(跑批日期)
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @RequestMapping(value = "/sparkJob/blacklist",method = RequestMethod.POST)
+    public String blacklist(HttpServletRequest request) throws IOException, InterruptedException {
+
+        String businessDate = request.getParameter("businessDate");
+
+        SparkLauncherController sparkLauncherController = new SparkLauncherController();
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getBlacklistClasspath(),new String[]{businessDate});
 
         return result.toString();
     }

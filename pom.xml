@@ -28,6 +28,7 @@
         <module>redis</module>
         <module>thread</module>
 		<module>orm</module>
+		<module>use</module>
 	</modules>
 
 

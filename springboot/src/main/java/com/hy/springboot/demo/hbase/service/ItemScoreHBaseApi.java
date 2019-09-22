@@ -156,31 +156,31 @@ public class ItemScoreHBaseApi implements Serializable {
         //rmdbs
 //        List<Map<String, Object>> ruleCodesMap = JDBCUtils.queryParams("select MIDCLASSNO from AML_RISKSUBTERM_MIDCLASS group by midclassno", null);
 //        for (Map<String, Object> map:ruleCodesMap){
-//            result.add(map.get("MIDCLASSNO").toString());
+//            result.add(map.get("MIDCLASSNO").toString().toUpperCase());
 //        }
 
 
         //hardCode
-        result.add("a1");
-        result.add("a3");
-        result.add("b2");
+        result.add("A1");
+        result.add("A3");
+        result.add("B2");
         result.add("13");
         result.add("11");
         result.add("12");
         result.add("21");
-        result.add("a4");
-        result.add("a2");
+        result.add("A4");
+        result.add("A2");
         result.add("16");
         result.add("31");
-        result.add("b1");
+        result.add("B1");
         result.add("32");
         result.add("42");
         result.add("43");
         result.add("14");
         result.add("15");
         result.add("41");
-        result.add("b3");
-        result.add("b4");
+        result.add("B3");
+        result.add("B4");
 
 
         return result;
