@@ -1,4 +1,4 @@
-package com.hy.springboot.demo.hbase.dao;
+package com.hy.springboot.demo.hbase.tool;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
@@ -15,16 +15,6 @@ import org.apache.hadoop.hbase.util.Bytes;
 public class HBaseRowkeyGen {
 
 
-//    public static int genRowkey(Object id){
-//
-//        //获得id的值
-//        Integer rowkey = id.hashCode();
-//        int ret = revertInteger(rowkey);
-//
-//        return ret;
-//
-//
-//    }
 
     public static byte[] revertString(String rowkey){
 

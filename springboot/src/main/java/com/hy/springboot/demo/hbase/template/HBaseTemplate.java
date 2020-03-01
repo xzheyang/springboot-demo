@@ -1,4 +1,4 @@
-package com.hy.springboot.demo.hbase.dao;
+package com.hy.springboot.demo.hbase.template;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;

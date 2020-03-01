@@ -1,11 +1,11 @@
 package com.hy.springboot.demo.spark.controller;
 
+import com.hy.springboot.demo.common.bean.InvokeResult;
+import com.hy.springboot.demo.common.bean.NewInvokeResult;
+import com.hy.springboot.demo.spark.bean.DateInvoke;
 import com.hy.springboot.demo.spark.service.BasicConfigService;
 import com.hy.springboot.demo.spark.service.SparkLauncherController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -20,6 +20,9 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 public class SparkWebController {
+
+    //spark服务提交控制
+    private static volatile Boolean runFlag = false;
 
     @RequestMapping(value = "/sparkJob/run/{className}",method = RequestMethod.POST)
     public String run(@PathVariable("className") String className) throws IOException, InterruptedException {
@@ -112,6 +115,7 @@ public class SparkWebController {
     }
 
 
+
     /**
      *  规则筛选调用接口
      *
@@ -130,6 +134,27 @@ public class SparkWebController {
 
         return result.toString();
     }
+
+
+    /**
+     *  批量规则筛选调用接口
+     *
+     * @param request       businessDate(跑批日期)
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @RequestMapping(value = "/sparkJob/ruleManyProcess",method = RequestMethod.POST)
+    public String ruleMany(HttpServletRequest request) throws IOException, InterruptedException {
+
+        String businessDates = request.getParameter("businessDates");
+
+        SparkLauncherController sparkLauncherController = new SparkLauncherController();
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getRuleManyClasspath(),new String[]{businessDates});
+
+        return result.toString();
+    }
+
 
 
     /**
@@ -154,6 +179,31 @@ public class SparkWebController {
 
 
     /**
+     *  指定某特定自然人名单筛查
+     *
+     * @param request      uid  负面清单模板id，如果有多个id时用“|”分隔
+     *
+     * @return      isSuccess (接口是否执行成功 1:成功 0:失败)
+     *              returnMsg (当isSuccess=1时，返回接口执行成功,当isSuccess=0时，返回错误信息)
+     *
+     */
+    @RequestMapping(value = "/sparkJob/identifyByUids",method = RequestMethod.POST)
+    public InvokeResult identifyByUids(HttpServletRequest request) throws IOException, InterruptedException {
+
+        String uid = request.getParameter("uid");
+
+        SparkLauncherController sparkLauncherController = new SparkLauncherController();
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getIdentifyBycustClasspath(),new String[]{uid});
+
+        if (result){
+            return new InvokeResult("1","success");
+        }
+
+        return new InvokeResult("0","error");
+    }
+
+
+    /**
      *  黑名单对外调用接口
      *
      * @param request       businessDate(跑批日期)
@@ -170,6 +220,51 @@ public class SparkWebController {
         Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getBlacklistClasspath(),new String[]{businessDate});
 
         return result.toString();
+    }
+
+    /**
+     *  黑名单对外调用接口
+     *
+     * @param request       modelNo 黑名单模板编号，如果有多个编号时用“|”分隔
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @RequestMapping(value = "/sparkJob/blacklistByModelNo",method = RequestMethod.POST)
+    public InvokeResult blacklistByModelNo(HttpServletRequest request) throws IOException, InterruptedException {
+
+        String modelNo = request.getParameter("modelNo");
+
+        SparkLauncherController sparkLauncherController = new SparkLauncherController();
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getBlacklistBymodelClasspath(),new String[]{modelNo});
+
+        if (result){
+            return new InvokeResult("1","success");
+        }
+
+        return new InvokeResult("0","error");
+    }
+
+
+    /**
+     *  数据监控调用接口
+     *
+     * @param dateInvoke      时间调用
+     *
+     * @return
+     */
+    @RequestMapping(value = "/sparkJob/dataMonitor",method = RequestMethod.POST)
+    public NewInvokeResult save(@RequestBody DateInvoke dateInvoke) throws IOException, InterruptedException {
+
+        SparkLauncherController sparkLauncherController = new SparkLauncherController();
+        Boolean result = sparkLauncherController.submit(BasicConfigService.getAddress(),BasicConfigService.getDataMonitorClasspath(),new String[]{dateInvoke.getBusinessDate()});
+
+        if (result){
+            return new NewInvokeResult("1","success");
+        }
+
+        return new NewInvokeResult("0","error");
+
     }
 
 
