@@ -22,6 +22,10 @@ public class BasicConfigService {
     private static final String TABLE_MIGRATE_CLASSPATH;
     private static final String IDENTIFY_CLASSPATH;
     private static final String BLACKLIST_CLASSPATH;
+    private static final String IDENTIFY_BYCUST_CLASSPATH;
+    private static final String BLACKLIST_BYMODEL_CLASSPATH;
+    private static final String RULE_MANY_CLASSPATH;
+    private static final String DATA_MONITOR_CLASSPATH;
 
     static {
 
@@ -41,6 +45,20 @@ public class BasicConfigService {
         IDENTIFY_CLASSPATH  = bundle.getString("identify_classpath");
         BLACKLIST_CLASSPATH = bundle.getString("blacklist_classpath");
 
+        IDENTIFY_BYCUST_CLASSPATH = bundle.getString("identify_bycust_classpath");
+        BLACKLIST_BYMODEL_CLASSPATH = bundle.getString("blacklist_bymodel_classpath");
+
+        RULE_MANY_CLASSPATH = bundle.getString("rule_many_classpath");
+
+        DATA_MONITOR_CLASSPATH = bundle.getString("data_monitor_classpath");
+    }
+
+    public static String getIdentifyBycustClasspath() {
+        return IDENTIFY_BYCUST_CLASSPATH;
+    }
+
+    public static String getBlacklistBymodelClasspath() {
+        return BLACKLIST_BYMODEL_CLASSPATH;
     }
 
     public static String getHostIp() {
@@ -90,4 +108,13 @@ public class BasicConfigService {
     public static String getBlacklistClasspath() {
         return BLACKLIST_CLASSPATH;
     }
+
+    public static String getRuleManyClasspath() {
+        return RULE_MANY_CLASSPATH;
+    }
+
+    public static String getDataMonitorClasspath() {
+        return DATA_MONITOR_CLASSPATH;
+    }
+
 }

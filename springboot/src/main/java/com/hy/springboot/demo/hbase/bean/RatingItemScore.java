@@ -10,7 +10,8 @@ public class RatingItemScore {
     private String groupId;
     private String ruleCode;
     private String ruleExCode;
-    private String itemScore;
+    private String score;
+    private String weight;
 
     public String getGroupId() {
         return groupId;
@@ -36,12 +37,20 @@ public class RatingItemScore {
         this.ruleExCode = ruleExCode;
     }
 
-    public String getItemScore() {
-        return itemScore;
+    public String getScore() {
+        return score;
     }
 
-    public void setItemScore(String itemScore) {
-        this.itemScore = itemScore;
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     @Override
@@ -50,7 +59,8 @@ public class RatingItemScore {
                 "groupId='" + groupId + '\'' +
                 ", ruleCode='" + ruleCode + '\'' +
                 ", ruleExCode='" + ruleExCode + '\'' +
-                ", itemScore='" + itemScore + '\'' +
+                ", score='" + score + '\'' +
+                ", weight='" + weight + '\'' +
                 '}';
     }
 }

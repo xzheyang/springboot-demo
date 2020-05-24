@@ -11,13 +11,8 @@
 
     <artifactId>springboot-demo-springboot</artifactId>
 
+    <packaging>jar</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <start-class>com.hy.springboot.demo.DemoApplication</start-class>
-    </properties>
 
     <repositories>
         <repository>
@@ -26,6 +21,12 @@
         </repository>
     </repositories>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <start-class>com.hy.springboot.demo.DemoApplication</start-class>
+    </properties>
 
     <dependencies>
 
@@ -63,7 +64,19 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
-            </exclusions>
+                <!-- 移除tomcat -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+             </exclusions>
+        </dependency>
+
+
+        <!--指定容器starter-jetty-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
 
 
