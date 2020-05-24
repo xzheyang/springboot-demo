@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class PropertiesSuitTest {
 
+
+
     @Autowired
     private PropertiesSuit propertiesSuit;
 
@@ -27,6 +29,8 @@ public class PropertiesSuitTest {
     public void hello(){
         List<String> urls = propertiesSuit.getUrls();
         System.out.println("urls: "+urls);
+        String title = propertiesSuit.getTitle1();
+        System.out.println("title: "+title);
     }
 
 
