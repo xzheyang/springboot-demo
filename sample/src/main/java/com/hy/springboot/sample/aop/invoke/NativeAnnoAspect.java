@@ -40,24 +40,24 @@ public class NativeAnnoAspect {
         System.out.println("NativeAnnoAspect after say");
     }
 
-
-    @Around("jointPoint()")
-    public Object around(ProceedingJoinPoint joinPoint) {
-        System.out.println("NativeAnnoAspect around say");
-
-        Object result = printLog(joinPoint, LogLevel.TRACE, "正常日志");
-
-
-        //通过
-        Object proceed = null;
-        try {
-            proceed = joinPoint.proceed();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-
-        return proceed;
-    }
+    //环绕增强好像因为优先级和其他的增强有冲突,要注释
+//    @Around("jointPoint()")
+//    public Object around(ProceedingJoinPoint joinPoint) {
+//        System.out.println("NativeAnnoAspect around say");
+//
+//        Object result = printLog(joinPoint, LogLevel.TRACE, "正常日志");
+//
+//
+//        //通过
+//        Object proceed = null;
+//        try {
+//            proceed = joinPoint.proceed();
+//        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+//        }
+//
+//        return proceed;
+//    }
 
 
     private Object printLog(JoinPoint joinPoint,LogLevel level, String describe) {

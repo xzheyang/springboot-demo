@@ -3,7 +3,6 @@ package com.hy.springboot.thread.deferedresult_multithreading.controller;
 
 import com.hy.springboot.thread.deferedresult_multithreading.dao.DeferredResultHolder;
 import com.hy.springboot.thread.deferedresult_multithreading.dao.MockQueue;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

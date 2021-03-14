@@ -1,16 +1,10 @@
 package com.hy.springboot.sample.test;
 
-import com.hy.springboot.sample.redis.Applaction;
+import com.hy.springboot.sample.redis.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @user yang he
@@ -19,7 +13,7 @@ import java.util.List;
  **/
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Applaction.class)
+@SpringBootTest(classes = Application.class)
 public class RedisTest {
 
     @Test
